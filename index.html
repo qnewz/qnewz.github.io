@@ -1,0 +1,139 @@
+<html>
+<head>
+<title>Hовости</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- 
+<link rel="shortcut icon" href="https://news.yandex.ru/favicon.ico"/>
+<link rel="icon" sizes="24x24" href="https://yastatic.net/iconostasis/_/lQHbCexSgizAhisugKD79mTz__Q.png" type="image/png"/>
+<link rel="icon" sizes="32х32" href="https://yastatic.net/iconostasis/_/NOwNHktJskVNPZcTJcTvuXUXPzg.png" type="image/png"/>
+<link rel="icon" sizes="64x64" href="https://yastatic.net/iconostasis/_/UBaaXgpU3qo2rqZuvG9gLzr7708.png" type="image/png"/>
+<link rel="icon" sizes="96x96" href="https://yastatic.net/iconostasis/_/lcamcuh-DgDslnjBRGXI6VMyGLs.png" type="image/png"/>
+<link rel="apple-touch-icon-precomposed" sizes="152x152" href="/152x152.png" type="image/png"/>
+<meta name="msapplication-square70x70logo" content="/70x70.png"/>
+<meta name="msapplication-square150x150logo" content="/150x150.png"/>
+<meta name="msapplication-wide310x150logo" content="/310x150.png"/>
+<meta name="msapplication-square310x310logo" content="/310x310.png"/>
+<meta name="application-name" content="Новости"/>
+<meta name="msapplication-TileColor" content="#FA6800"/>
+<meta name="apple-mobile-web-app-capable" content="yes" />
+-->
+<style>
+body {
+    background-color: black;
+    font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
+}
+a {
+    text-decoration: none;
+    color: white;
+}
+hr {
+    border: none;
+    color: gray;
+    background-color: gray;
+    height: 1px;
+}
+#moex {
+    color: white;
+}
+#moex span {
+    color: gray;
+}
+span.cnt {
+    color: gray;
+    float: right;
+    border: 1px solid gray;
+    border-radius: 2px;
+}
+</style>
+</head>
+<body onLoad="init()">
+<div id='moex'>&nbsp;</div>
+<script>
+function init(){
+    if(location.toString().substring(0, 5) != 'https'){
+        location = 'https://trkm.github.io/m.html'
+        return 
+    }
+    var r = new XMLHttpRequest();
+    url = 'https://iss.moex.com/iss/engines/currency/markets/selt/securities.jsonp?securities=CETS%3AUSD000UTSTOM%2CCETS%3AEUR_RUB__TOM&lang=ru'
+    r.open("GET", url, true);
+    r.onreadystatechange = function(){        
+        try {
+            if(r.readyState != 4 || r.status != 200) return;
+            var j = JSON.parse(r.responseText)        
+            var usd = '?'
+            var dt = '?'
+            var dd = ''
+            var eur = '?'
+            for(i = 0; i < j["marketdata"]["data"].length; i++){
+              if(j["marketdata"]["data"][i][20].indexOf('EUR') === 0){
+                eur = j["marketdata"]["data"][i][8]            
+              }
+              else if(j["marketdata"]["data"][i][20].indexOf('USD') === 0){
+                usd = j["marketdata"]["data"][i][8]              
+                dt = j["marketdata"]["data"][i][39]
+                dd = ' ' + dt.substring(8,10) + '.' + dt.substring(5,7)
+                dt = dt.substring(11,16)
+              }
+            }
+            function f(x){
+                return x.toFixed(2)
+            }
+            var cnt = 1
+            var ymd = (new Date()).toISOString().slice(0,10)
+            if(localStorage.getItem('last_ymd') == ymd){
+                cnt = parseInt(localStorage.getItem('last_cnt')) + 1
+                localStorage.setItem('last_cnt', '' + cnt)
+            }
+            else{
+                localStorage.setItem('last_ymd', ymd)
+                localStorage.setItem('last_cnt', '' + cnt)
+            }
+            var res = '<span class="cur">$ </span>' + f(usd) + 
+                      ' <span class="cur">&euro; </span>' + f(eur) +
+                      ' ' + (eur/usd).toFixed(4) +
+                      ' <span class="cur">' + dt + '</span>' +
+                      ' <span class="cnt">&nbsp;' + cnt + '&nbsp;</span>'
+            document.getElementById('moex').innerHTML = res
+            localStorage.setItem('usd_eur', res + dd)
+        }
+        catch (err) {        
+            document.getElementById('moex').innerHTML = localStorage.getItem('usd_eur')
+            console.log(err)
+        }
+    };
+    r.send()        
+}
+
+function sh(element_id){
+  var x = document.getElementById(element_id);
+  if(x.style.display === 'none'){
+    x.style.display = 'block';
+  }else{
+    x.style.display = 'none';
+  }
+  return false
+}
+
+function _print(w,rubric,prefix){
+    var data=w[rubric];
+    if(!data||!data.length){return;}    
+    var html='';
+    for(var i=0;i<data.length;i++){
+        var item=data[i];
+        html+='<p><div><a href="#" onClick="return sh(\'news-1-' + prefix + i + '\')">'+item.title+'</a></div>'+
+            '<div id="news-1-' + prefix + i + '" style="display: none;color: gray;">' + item.descr + '</div></p>';
+            //'<a href="'+item.url+
+            //'" target="_blank" style="color: gray;">'+item.descr+'</a></div></p>';
+    }
+    document.write(html);
+}
+</script>
+<script src="https://news.yandex.ru/ru/index5.utf8.js" charset="utf-8"></script>
+<script>_print(window, 'm_index', 'main');</script>
+<!-- br / hr -->
+<script src="https://news.yandex.ru/Moscow/index5.utf8.js" charset="utf-8"></script>
+<script>_print(window, 'm_index', 'msk')</script>
+
+</body>
+</html>
