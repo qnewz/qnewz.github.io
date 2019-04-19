@@ -77,7 +77,12 @@ function init(){
               }
             }
             function f(x){
-                return x.toFixed(2)
+                if(x){
+                    return x.toFixed(2)
+                }
+                else{
+                    return '0.00'
+                }
             }
             var cnt = 1
             var ymd = (new Date()).toISOString().slice(0,10)
