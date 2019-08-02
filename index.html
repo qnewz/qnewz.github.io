@@ -124,7 +124,7 @@ function _print(w,rubric,prefix){
     var data=w[rubric];
     if(!data||!data.length){return;}    
     var html='';
-    for(var i=0;i<data.length;i++){
+    for(var i=0;i<Math.min(5, data.length);i++){
         var item=data[i];
         html+='<p><div><a href="#" onClick="return sh(\'news-1-' + prefix + i + '\')">'+item.title+'</a></div>'+
             '<div id="news-1-' + prefix + i + '" style="display: none;color: gray;">' + item.descr + '</div></p>';
