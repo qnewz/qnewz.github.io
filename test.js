@@ -1,7 +1,7 @@
 function api_get(url, ok_callback){
     //TODO: error_callback
     var r = new XMLHttpRequest()
-    r.open("GET", 'http://195.133.144.177/mn-api/v1/' + url, true)
+    r.open("GET", 'https://195-133-144-177.sslip.io/mn-api/v1/' + url, true)
     r.onreadystatechange = function(){
         if(r.readyState != 4 || r.status != 200) return        
         var result = JSON.parse(r.responseText)
@@ -212,7 +212,7 @@ function send_result(news){
 function preload_images(){
     var dw =  getWidth()
     for(var i = 0; i < queue.length; i++){
-        var img_url = 'http://195.133.144.177/mn-img/' + dw + '/' + i
+        var img_url = 'https://195-133-144-177.sslip.io/mn-img/' + dw + '/' + i
         if(queue[i].img == undefined){
             queue[i].img = img_url
         }
