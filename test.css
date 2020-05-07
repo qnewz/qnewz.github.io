@@ -1,0 +1,334 @@
+body {
+    margin: 0px;
+    color: white;
+    background-color: black;
+    font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
+    overflow-x: hidden;
+}
+
+.container {
+    position: absolute;
+    top: 0px;
+    bottom:0px;
+    display: flex;
+    flex-direction: column;
+}
+
+.view {
+    flex-grow: 2;
+    position: relative;
+    top: 0px;
+    bottom: 0px;
+    overflow: hidden;
+}
+
+.view.hidden {
+    display: none;
+}
+
+.card {
+    background-color: black;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+#top-card {
+    z-index: 2;
+}
+
+#next-card {
+    z-index: 1;
+}
+
+.main-info {
+    background-color: lightgray;
+    /*background-image: url(http://192.168.0.106:8081/504/1);*/
+    position: absolute;
+    top: 0px;
+    height: 75vw;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+}
+
+.info-wrap {
+    position: absolute;
+    bottom: 0px;
+    width: 100vw;
+    background: linear-gradient(0deg,
+                            rgba(0, 0, 0, 0.9) 0%,
+                            rgba(0,0,0,.45) 75%,
+                            rgba(0,0,0,0.0) 100%);
+}
+
+.title {
+    font-size: 25px;
+    padding: 10px;    
+}
+
+.reference {
+    color: gray;    
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom: 10px;
+    padding-top: 0px;
+}
+
+.description-wrap {
+    background-color: black;
+    color: white;
+    position: absolute;
+    width: 100vw;
+    top: 75vw;
+    bottom: 0px;
+}
+
+.description {
+    padding: 10px;
+    overflow: hidden;
+    position: absolute;
+    top: 0px;
+    bottom: 0px;
+}
+
+#history-list {
+    overflow-y: hidden;
+    padding: 0px;
+    background-color: black;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.history-item {
+    width: 100vw;
+    min-height: 1.5 rem;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    cursor: pointer;
+}
+
+#history-description {
+    padding: 5px;
+}
+
+.can-hover .history-item:hover {
+    background: #333333;
+}
+
+.history-flag {
+    white-space: nowrap;
+    padding: 5px;
+}
+
+.history-title {
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 5px;
+}
+
+.result-x {
+    color: #ff5555;
+}
+
+.result-v {
+    color: #33cc33;
+}
+
+.result-n {
+    color: #7777ff;
+}
+
+#search-form {
+    display: flex;
+}
+
+textarea:focus, input:focus{
+    outline: none;
+}
+
+#search-query {
+    flex: 2;
+    margin: 10px;
+    margin-right: 0px;
+    background: #333333;
+    color: white;
+    border: 0px;
+    border-radius: 0px;
+    padding: 5px;
+    font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
+    font-size: 1.0rem;
+}
+
+.search-button {
+    margin: 10px;
+    margin-left: 0px;
+    padding: 5px;
+    background: #333333;
+    color: white;
+    border: 0px;
+    cursor: pointer;
+    font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
+}
+
+#search-result-list {
+    overflow-y: hidden;
+    padding: 0px;
+    background-color: black;
+    position: absolute;
+    top: 52px;
+    bottom: 0px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+#search-not-found {
+    width: 90%;
+    width: calc(100vw - 20px);
+    padding: 10px;
+    display: inline-block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+#search-description {
+    padding: 10px;
+}
+
+.search-item {
+    width: 100vw;
+    min-height: 1.5 rem;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    cursor: pointer;
+}
+
+.can-hover .search-item:hover {
+    background: #333333;
+}
+
+.search-flag {
+    white-space: nowrap;
+    padding: 5px;
+    padding-left: 10px;
+}
+
+.search-title {
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 5px;
+}
+
+#user {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: flex-start;
+    width: 100vw;
+    /*justify-content: center;*/
+}
+
+#avatar {
+    margin: 10px;
+    width: 40px;
+    height: 40px;
+    font-size: 30px;
+    background-color: gray;
+    color: white;
+    text-align: center;
+    border-radius: 20px;
+}
+
+#username {
+    padding-top: 15px;
+    padding-bottom: 5px;
+    margin-right: 15px;
+    height: 40px;
+    font-size: 20px;
+    color: gray;
+    vertical-align: middle;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+#sign-in-description {
+    padding: 10px;
+    padding-top: 0px;
+    color: gray;
+}
+
+.menu-item {
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 7px;
+    padding-bottom: 7px;
+    font-size: 1.2rem;
+    color: white;
+    cursor: pointer;
+}
+
+.badge {
+    color: yellow;
+}
+
+.tabs {
+    display: flex;
+    flex-direction: row;
+    min-height: 70px;
+    width: 100vw;
+    font-size: 0.8rem;
+}
+
+.tab {
+    background-color: #333333;
+    flex-direction: column;
+    min-width: 40px;
+    width: 25%;
+    padding: 10px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.icon {
+    min-width: 25px;
+    max-width: 25px;
+    fill: gray;
+}
+
+.can-hover .tab:hover .icon {
+    fill: white;
+}
+
+.tab.selected .icon {
+    fill: lightgray;
+}
+
+.tab-label {
+    color: gray;
+}
+
+.can-hover .tab:hover .tab-label {
+    color: white;
+}
+
+.tab.selected .tab-label {
+    color: lightgray;
+}
+
+.can-hover .tab:hover {
+    background-color: darkslategray;
+}

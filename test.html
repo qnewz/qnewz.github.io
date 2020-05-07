@@ -1,0 +1,132 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1, maximum-scale=1">
+    <title>Зaголовки</title>
+    <link rel="stylesheet" type="text/css" href="test.css?1">
+    <script src="test.js"></script>
+	<script src="hammer.min.js"></script>
+</head>
+<body onload="init()">
+    <div class="container">
+        <div id="news-panel" class="view">
+            <div id="top-card" class="card">
+                <div id="bg1" class="main-info">
+                    <div class="info-wrap">
+                        <div id="title1" class="title">
+                            Заголовок новости
+                        </div>
+                        <div id="reference1" class="reference">
+                            site-name.ru 11:00
+                        </div>
+                    </div>
+                </div>
+                <div class="description-wrap">
+                    <div id="description1" class="description">                    
+                        Описание новости
+                    </div>
+                </div>
+            </div>
+            <div id="next-card" class="card">
+                <div id="bg2" class="main-info">
+                    <div class="info-wrap">
+                        <div id="title2" class="title">
+                            Заголовок новости 2
+                        </div>
+                        <div id="reference2" class="reference">
+                            site2-name.ru 22:00
+                        </div>
+                    </div>
+                </div>
+                <div class="description-wrap">
+                    <div id="description2" class="description">
+                        Описание новости 2
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="history-panel" class="view hidden">
+            <div id="history-list">
+            </div>
+        </div>
+        <div id="search-panel" class="view hidden">
+            <div id="search-form">
+                <input type="text" id="search-query" placeholder="Поиск" maxsize="500" onkeypress="on_search_query(event)">
+                <button class="search-button" onclick="on_search_button()">
+                    <svg width="20" height="20" viewBox="0 0 16 16" fill="white" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" d="M10.442 10.442a1 1 0 011.415 0l3.85 3.85a1 1 0 01-1.414 1.415l-3.85-3.85a1 1 0 010-1.415z" clip-rule="evenodd"/>
+                        <path fill-rule="evenodd" d="M6.5 12a5.5 5.5 0 100-11 5.5 5.5 0 000 11zM13 6.5a6.5 6.5 0 11-13 0 6.5 6.5 0 0113 0z" clip-rule="evenodd"/>
+                    </svg>
+                </button>
+                </form>
+            </div>
+            <div id="search-result-list"></div>
+        </div>
+        <div id="more-panel" class="view hidden">
+            <div>
+                <!--
+                <div id="auth-block">
+                    <div id="user">
+                        <div id="avatar">Z</div>
+                        <div id="username">zupper-user-user-fuck@mail.ru</div>
+                    </div>
+                </div>
+                <div class="menu-item">Выйти</div>
+                <hr noshade>
+                -->
+                <div class="menu-item">Войти или зарегистрироваться</div>
+                <div id="sign-in-description">
+                    это позволит сохранить персональные рекомендации,
+                    историю просмотров и настройки, а также перенести их на 
+                    другие ваши устройства
+                </div>
+                <!-- div class="menu-item">Премиум</div -->
+                <div class="menu-item">Настройки <span class="badge">&#x2777;</span></div>
+                <div class="menu-item">Помощь</div>
+                <div class="menu-item">Обратная связь</div>
+                <div class="menu-item">О приложении</div>
+            </div>
+        </div>
+        <div class="tabs">
+            <div id="news-tab" class="tab selected" onclick="on_news_tab()">
+                <div class="tab-icon">
+                    <svg class="icon" id="newspaper" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" d="M0 2A1.5 1.5 0 011.5.5h11A1.5 1.5 0 0114 2v12a1.5 1.5 0 01-1.5 1.5h-11A1.5 1.5 0 010 14V2zm1.5-.5A.5.5 0 001 2v12a.5.5 0 00.5.5h11a.5.5 0 00.5-.5V2a.5.5 0 00-.5-.5h-11z" clip-rule="evenodd"/>
+                        <path fill-rule="evenodd" d="M15.5 3a.5.5 0 01.5.5V14a1.5 1.5 0 01-1.5 1.5h-3v-1h3a.5.5 0 00.5-.5V3.5a.5.5 0 01.5-.5z" clip-rule="evenodd"/>
+                        <path d="M2 3h10v2H2V3zm0 3h4v3H2V6zm0 4h4v1H2v-1zm0 2h4v1H2v-1zm5-6h2v1H7V6zm3 0h2v1h-2V6zM7 8h2v1H7V8zm3 0h2v1h-2V8zm-3 2h2v1H7v-1zm3 0h2v1h-2v-1zm-3 2h2v1H7v-1zm3 0h2v1h-2v-1z"/>
+                    </svg>
+                </div>
+                <div class="tab-label">Новости</div>
+            </div>
+            <div id="history-tab" class="tab" onclick="on_history_tab()">
+                <div class="tab-icon">
+                    <svg class="icon" id="clock-history" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" d="M8.515 1.019A7 7 0 008 1V0a8 8 0 01.589.022l-.074.997zm2.004.45a7.003 7.003 0 00-.985-.299l.219-.976c.383.086.76.2 1.126.342l-.36.933zm1.37.71a7.01 7.01 0 00-.439-.27l.493-.87a8.025 8.025 0 01.979.654l-.615.789a6.996 6.996 0 00-.418-.302zm1.834 1.79a6.99 6.99 0 00-.653-.796l.724-.69c.27.285.52.59.747.91l-.818.576zm.744 1.352a7.08 7.08 0 00-.214-.468l.893-.45a7.976 7.976 0 01.45 1.088l-.95.313a7.023 7.023 0 00-.179-.483zm.53 2.507a6.991 6.991 0 00-.1-1.025l.985-.17c.067.386.106.778.116 1.17l-1 .025zm-.131 1.538c.033-.17.06-.339.081-.51l.993.123a7.957 7.957 0 01-.23 1.155l-.964-.267c.046-.165.086-.332.12-.501zm-.952 2.379c.184-.29.346-.594.486-.908l.914.405c-.16.36-.345.706-.555 1.038l-.845-.535zm-.964 1.205c.122-.122.239-.248.35-.378l.758.653a8.073 8.073 0 01-.401.432l-.707-.707z" clip-rule="evenodd"/>
+                        <path fill-rule="evenodd" d="M8 1a7 7 0 104.95 11.95l.707.707A8.001 8.001 0 118 0v1z" clip-rule="evenodd"/>
+                        <path fill-rule="evenodd" d="M7.5 3a.5.5 0 01.5.5v5.21l3.248 1.856a.5.5 0 01-.496.868l-3.5-2A.5.5 0 017 9V3.5a.5.5 0 01.5-.5z" clip-rule="evenodd"/>
+                    </svg>
+                </div>
+                <div class="tab-label">История</div>
+            </div>
+            <div id="search-tab" class="tab" onclick="on_search_tab()">
+                <div class="tab-icon">
+                    <svg class="icon" id="search" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" d="M10.442 10.442a1 1 0 011.415 0l3.85 3.85a1 1 0 01-1.414 1.415l-3.85-3.85a1 1 0 010-1.415z" clip-rule="evenodd"/>
+                        <path fill-rule="evenodd" d="M6.5 12a5.5 5.5 0 100-11 5.5 5.5 0 000 11zM13 6.5a6.5 6.5 0 11-13 0 6.5 6.5 0 0113 0z" clip-rule="evenodd"/>
+                    </svg>
+                </div>
+                <div class="tab-label">Поиск</div>
+            </div>
+            <div id="more-tab" class="tab" onclick="on_more_tab()">
+                <div class="tab-icon">
+                    <svg class="icon" id="three-dots" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" d="M3 9.5a1.5 1.5 0 110-3 1.5 1.5 0 010 3zm5 0a1.5 1.5 0 110-3 1.5 1.5 0 010 3zm5 0a1.5 1.5 0 110-3 1.5 1.5 0 010 3z" clip-rule="evenodd"/>
+                    </svg>
+                </div>
+                <div class="tab-label">Еще</div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
