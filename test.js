@@ -41,7 +41,12 @@ function onkey(e){
 }
 
 function ontap(){
-    window.open(queue[0].url, '_blank', 'noreferrer,noopener,toolbar,location')
+    var a = document.createElement('a')
+    a.href = queue[0].url
+    a.target = "_blank"
+    a.rel = "noreferrer"
+    a.click()
+    //window.open(queue[0].url, '_blank', 'noreferrer=yes,noopener=yes,toolbar=yes,location=yes')
 }
 
 function onpan(e) {
@@ -365,7 +370,7 @@ function on_more_tab(){
     document.getElementById('search-tab').classList.remove("selected")
     document.getElementById('more-tab').classList.add("selected")
 
-    document.getElementById('menu-version').innerText = "Версия: 0.1"
+    document.getElementById('menu-version').innerText = "Версия: 0.12"
 }
 
 function on_search_query(e){
