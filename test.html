@@ -21,8 +21,11 @@
     <link rel="apple-touch-icon" sizes="167x167" href="/img/app-icon-167x167.png">
     <link rel="apple-touch-icon" sizes="180x180" href="/img/app-icon-180x180.png">
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
-    <link rel="stylesheet" type="text/css" href="test.css">
-    <script src="test.js"></script>
+    <link rel="preload" as="image" href="result-n.svg">
+    <link rel="preload" as="image" href="result-v.svg">
+    <link rel="preload" as="image" href="result-x.svg">
+    <link rel="stylesheet" type="text/css" href="test2.css">
+    <script src="test2.js"></script>
 	<script src="hammer.min.js"></script>
 </head>
 <body onload="init()">
@@ -69,16 +72,15 @@
         </div>
         <div id="search-panel" class="view hidden">
             <div id="search-form">
-                <input type="text" id="search-query" placeholder="Поиск" maxsize="500" onkeypress="on_search_query(event)">
-                <button class="search-button" onclick="on_search_button()">
+                <div id="search-query-wrapper"><input type="text" id="search-query" placeholder="Поиск" maxsize="500" onkeypress="on_search_query(event)"></div>
+                <div id="search-button" onclick="on_search_button()">
                     <svg width="20" height="20" viewBox="0 0 16 16" fill="white" xmlns="http://www.w3.org/2000/svg">
                         <path fill-rule="evenodd" d="M10.442 10.442a1 1 0 011.415 0l3.85 3.85a1 1 0 01-1.414 1.415l-3.85-3.85a1 1 0 010-1.415z" clip-rule="evenodd"/>
                         <path fill-rule="evenodd" d="M6.5 12a5.5 5.5 0 100-11 5.5 5.5 0 000 11zM13 6.5a6.5 6.5 0 11-13 0 6.5 6.5 0 0113 0z" clip-rule="evenodd"/>
                     </svg>
-                </button>
-                </form>
+                </div>
             </div>
-            <div id="search-result-list"></div>
+            <div id="search-list"></div>
         </div>
         <div id="more-panel" class="view hidden">
             <div>
@@ -93,7 +95,7 @@
                 <hr noshade>
                 -->
                 <div class="menu-item">Войти или зарегистрироваться</div>
-                <div id="sign-in-description">
+                <div class="menu-description">
                     это позволит сохранить персональные рекомендации,
                     историю просмотров и настройки, а также перенести их на 
                     другие ваши устройства
@@ -103,6 +105,7 @@
                 <div class="menu-item">Помощь</div>
                 <div class="menu-item">Обратная связь</div>
                 <div class="menu-item">О приложении</div>
+                <div id="menu-version" class="menu-description">Версия ___</div>
             </div>
         </div>
         <div class="tabs">

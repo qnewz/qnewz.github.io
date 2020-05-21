@@ -41,7 +41,7 @@ function onkey(e){
 }
 
 function ontap(){
-    window.open(queue[0].url, '_blank')
+    window.open(queue[0].url, '_blank', 'noreferrer,noopener,toolbar,location')
 }
 
 function onpan(e) {
@@ -316,44 +316,24 @@ function on_history_tab(){
     var history = JSON.parse(localStorage.getItem('history') || '[]')
     if(history.length == 0){
         history_list.innerHTML =
-        '<div id="history-description">Здесь пока ничего нет...</div>' +
-        '<div id="history-description">Для просмотра ...</div>'
+        '<div class="list-header">Здесь будет отображаться список ' +
+        'последних просмотренных новостей.</div>'
         return
     }
-    history_list.innerHTML =
-        '<div id="history-description">Последние просмотренные новости:</div>'
+    history_list.innerHTML = ''
+    //'<div class="list-header">Последние просмотренные новости:</div>'
     for(var i = 0; i < history.length; i++){
         var news = history[i]
         var div = document.createElement("div")
-        div.className = "history-item"
+        div.className = "list-item result-" + (news.result ? 'v' : 'x') 
         div.dataset.index = i
         div.onclick = function(){on_history_item(this)}
-        /*
-        //не надо показывать время просмотра!
-        //это проблемы с локальным временем (мск / др. часовые пояса)
-        //и вообще в казино не должно быть окон
-        var time = document.createElement("div")
-            time.className = "history-time"
-            var dt = new Date(info.view_time*1000)
-            var hh = '' + dt.getHours()
-            hh = hh.length == 1 ? '0' + hh : hh
-            var mm = '' + dt.getMinutes()
-            mm = mm.length == 1 ? '0' + mm : mm
-            time.innerText = "" + hh + ":" + mm
-            div.appendChild(time)
-        */
-        var time = document.createElement("div")
-        time.className = "history-flag result-" + (news.result ? 'v' : 'x')
-        time.innerHTML = '<img src="result-' + (news.result ? 'v' : 'x') +
-                         '.svg">&nbsp;'
-        div.appendChild(time)
-        var title = document.createElement("div")
-        title.className = news.result ? "history-title result-v" :
-                                        "history-title result-x"
-        title.dataset.index = i
-        title.onclick = function(){on_history_item(this)}
-        title.innerText = news.title
-        div.appendChild(title)
+        var img = document.createElement("img")
+        img.src = "result-" + (news.result ? 'v' : 'x') + '.svg'       
+        div.appendChild(img)
+        var span = document.createElement("span")
+        span.innerText = news.title
+        div.appendChild(span)
         history_list.appendChild(div)
         if(history_list.scrollHeight > history_list.offsetHeight){
             history_list.removeChild(div)
@@ -384,6 +364,8 @@ function on_more_tab(){
     document.getElementById('history-tab').classList.remove("selected")
     document.getElementById('search-tab').classList.remove("selected")
     document.getElementById('more-tab').classList.add("selected")
+
+    document.getElementById('menu-version').innerText = "Версия: 0.1"
 }
 
 function on_search_query(e){
@@ -422,41 +404,57 @@ function on_search_button(){
     query = encodeURIComponent(encodeURIComponent(query))
     var token = get_token()
     api_get("search/" + token + "/" + query, function(result){
-        var search_result_list = document.getElementById("search-result-list")
+        var search_list = document.getElementById("search-list")
         if(result.result.length == 0){            
-            search_result_list.innerHTML = '<div id="search-not-found">' +
-             'Ничего не найдено по запросу "<span id="query-not-found"></span>"</div>'
-            document.getElementById('query-not-found').innerText = result.query
+            search_list.innerHTML = '<div class="list-header">' +
+             'По запросу <span id="query-not-found"></span>' + 
+             ' ничего не найдено.</div>' +
+             '<div class="list-header">Рекомендации:<ul>' + 
+             '<li>Проверьте, нет ли ошибок в словах.</li>' +
+             '<li>Попробуйте поменять запрос.</li>' +
+             '<li>Посмотрите <a href="javascript:help_search()">' +
+             'раздел помощи по поиску</a>.</li></ul></div>'
+            var query = result.query
+            if(query.length > 100){
+                query = query.substring(0, 100) + '...'
+            }
+            document.getElementById('query-not-found').innerText = query
             return
         }
-        search_result_list.innerHTML =
-            '<div id="search-description"><div>Результаты поиска:</div></div>'        
+        search_list.innerHTML = ''
+        /*search_list.innerHTML =
+            '<div class="result-header">Результаты поиска:</div>'*/
+        console.log('search results for ' + result.query)
         var search_result = []
         for(var i = 0; i < result.result.length; i++){            
             var info = result.result[i]
+            var res = info.result === 2 ? 'v' :
+                      (info.result === 1 ? 'x' : 'n')
             var div = document.createElement("div")
-            div.className = "search-item"
+            div.className = "list-item result-" + res
             div.dataset.index = i
             div.onclick = function(){on_search_item(this)}
-            var time = document.createElement("div")
-            var res = info.result === 2 ? 'v' :
-                            (info.result === 1 ? 'x' : 'n')
-            time.className = "search-flag result-" + res
-            time.innerHTML = '<img src="result-' + res + '.svg">&nbsp;'
-            div.appendChild(time)
-            var title = document.createElement("div")
-            title.className = "search-title result-" + res
-            title.innerText = info.title
-            div.appendChild(title)
-            search_result_list.appendChild(div)            
-            if(search_result_list.scrollHeight > search_result_list.offsetHeight){
-                search_result_list.removeChild(div)
+            var img = document.createElement("img")
+            
+            img.src = "result-" + res + '.svg'       
+            div.appendChild(img)
+            var span = document.createElement("span")
+            span.innerText = info.title
+            div.appendChild(span)
+            search_list.appendChild(div)            
+            if(search_list.scrollHeight > search_list.offsetHeight){
+                search_list.removeChild(div)
                 break
             }
             search_result.push(info)
         }
         localStorage.setItem("search-result", JSON.stringify(search_result))
     })
+}
+
+function help_search(){
+    alert('ok!')
+    return false
 }
 
 function is_apple_device(){
