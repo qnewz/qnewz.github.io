@@ -51,6 +51,14 @@ function ontap(){
 
 function onpan(e) {
     moveTo(e.deltaX, 0)
+    if(e.deltaX > 0){
+        document.getElementById('v-mark').style.display = 'block'
+        document.getElementById('x-mark').style.display = 'none'
+    }
+    else if(e.deltaX < 0){
+        document.getElementById('x-mark').style.display = 'block'
+        document.getElementById('v-mark').style.display = 'none'
+    }
     var threshold = 100
     if(e.isFinal === true){
         if(e.deltaX > threshold){
@@ -106,6 +114,8 @@ function show_cards(){
     else{
         // TODO: show loading...
     }
+    document.getElementById('x-mark').style.display = 'none'
+    document.getElementById('v-mark').style.display = 'none'
     moveTo(0, 0)
     if(queue.length < 5){
         append_queue()
@@ -144,6 +154,8 @@ function turnCardBack(dx){
     function frame() {
         if(pos == 0){
             clearInterval(id);
+            document.getElementById('x-mark').style.display = 'none'
+            document.getElementById('v-mark').style.display = 'none'
         } else {
             if(pos > -inc || pos < inc){
                 pos = 0
