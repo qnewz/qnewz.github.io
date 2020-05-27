@@ -96,8 +96,8 @@
                 <div class="menu-item">Выйти</div>
                 <hr noshade>
                 -->
-                <div class="menu-item">Войти или зарегистрироваться</div>
-                <div class="menu-description">
+                <div class="menu-item" onclick="on_auth()">Войти</div>
+                <div class="menu-description" onclick="on_auth()">
                     это позволит сохранить персональные рекомендации,
                     историю просмотров и настройки, а также перенести их на 
                     другие ваши устройства
@@ -108,6 +108,27 @@
                 <div class="menu-item">Обратная связь</div>
                 <div class="menu-item">О приложении</div>
                 <div id="menu-version" class="menu-description">Версия ___</div>
+            </div>
+        </div>
+        <div id="auth-panel" class="subview hidden">
+            <div class="subview-header" onclick="on_auth_close()">
+                <span class="back">&lt; Назад</span>
+                Вход
+            </div>
+            <div class="subview-body">
+                <div>Войти с помощью:</div>
+                <div>
+                    <a href="javascript:alert('fb')" title="Facebook"><span id="auth-fb"></span></a>
+                    <a href="javascript:alert('tw')" title="Twitter"><span id="auth-tw"></span></a>
+                    <a href="javascript:alert('vk')" title="ВКонтакте"><span id="auth-vk"></span></a>
+                    <a href="javascript:alert('ok')" title="Одноклассники"><span id="auth-ok"></span></a>
+                    <a href="javascript:alert('ya')" title="Яндекс"><span id="auth-ya"></span></a>
+                    <a href="javascript:alert('gg')" title="Google"><span id="auth-gg"></span></a>
+                </div>
+                <div>или войти по коду на почту:</div> 
+                <div class="wrapper"><input type="text" id="auth-email" placeholder="Электронная почта" maxsize="500" onkeypress="on_email_auth(event)"></div>
+                <div class="wrapper"><button>Получить код</button></div>
+                
             </div>
         </div>
         <div class="tabs">

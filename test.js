@@ -289,6 +289,7 @@ function on_news_tab(){
     document.getElementById('history-panel').classList.add("hidden")
     document.getElementById('search-panel').classList.add("hidden")
     document.getElementById('more-panel').classList.add("hidden")
+    document.getElementById('auth-panel').classList.add("hidden")
 
     document.getElementById('news-tab').classList.add("selected")
     document.getElementById('history-tab').classList.remove("selected")
@@ -323,6 +324,7 @@ function on_history_tab(){
     document.getElementById('history-panel').classList.remove("hidden")
     document.getElementById('search-panel').classList.add("hidden")
     document.getElementById('more-panel').classList.add("hidden")
+    document.getElementById('auth-panel').classList.add("hidden")
 
     document.getElementById('news-tab').classList.remove("selected")
     document.getElementById('history-tab').classList.add("selected")
@@ -364,6 +366,7 @@ function on_search_tab(){
     document.getElementById('history-panel').classList.add("hidden")
     document.getElementById('search-panel').classList.remove("hidden")
     document.getElementById('more-panel').classList.add("hidden")
+    document.getElementById('auth-panel').classList.add("hidden")
 
     document.getElementById('news-tab').classList.remove("selected")
     document.getElementById('history-tab').classList.remove("selected")
@@ -374,15 +377,16 @@ function on_search_tab(){
 function on_more_tab(){
     document.getElementById('news-panel').classList.add("hidden")
     document.getElementById('history-panel').classList.add("hidden")
-    document.getElementById('search-panel').classList.add("hidden")
+    document.getElementById('search-panel').classList.add("hidden")    
     document.getElementById('more-panel').classList.remove("hidden")
+    document.getElementById('auth-panel').classList.add("hidden")
 
     document.getElementById('news-tab').classList.remove("selected")
     document.getElementById('history-tab').classList.remove("selected")
     document.getElementById('search-tab').classList.remove("selected")
     document.getElementById('more-tab').classList.add("selected")
 
-    document.getElementById('menu-version').innerText = "Версия: 0.12"
+    document.getElementById('menu-version').innerText = "Версия: 0.13"
 }
 
 function on_search_query(e){
@@ -467,6 +471,14 @@ function on_search_button(){
         }
         localStorage.setItem("search-result", JSON.stringify(search_result))
     })
+}
+
+function on_auth(){
+    document.getElementById('auth-panel').classList.remove("hidden")
+}
+
+function on_auth_close(){
+    document.getElementById('auth-panel').classList.add("hidden")
 }
 
 function help_search(){
